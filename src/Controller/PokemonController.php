@@ -36,7 +36,7 @@ class PokemonController extends AbstractController
         fclose($fp);
 
         $poke_ranks = array_keys($with_poke_lists);
-        // トップランキングからランダム1匹選出
+        // ランキングTOP30からランダム1匹選出
         $poke1 = $poke_ranks[rand(0, 29)];
 
         //0から9までの数値から抽選を行う
