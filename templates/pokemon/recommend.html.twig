@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ポケモン採用率ランキング | おすすめパーティ{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .poke_party { border: solid 2px #F5F5F5; width: 80%; margin-top: 80px;}
+    .recommend_link {
+        display       : inline-block;
+        position      : fixed;       /* ボタン固定 */
+        top           : 40px;        /* 下から位置 */
+        right         : 47rem;        /* 右から位置 */
+        padding       : 25px 25px;   /* 余白       */
+        background    : #FFA500;     /* 背景色     */
+        color         : #ffffff;     /* 文字色     */
+        opacity       : 0.5;         /* 透明度     */
+        border-radius : 50%;         /* 角丸       */
+        font-size     : 20pt;        /* 文字サイズ */
+        font-weight   : bold;        /* 太字       */
+        line-height   : 1.2em;       /* 行の高さ   */
+        letter-spacing: 2px;         /* 文字間隔   */
+        text-align    : center;      /* 文字位置   */
+        cursor        : pointer;     /* カーソル   */
+        z-index       : 999;         /* 重ね順位   */
+        }
+    .recommend_link:hover {
+        opacity       : 0.9;   /* カーソル時透明度 */
+    }
+    .back_link {
+        display       : inline-block;
+        position      : fixed;       /* ボタン固定 */
+        top           : 40px;        /* 下から位置 */
+        right         : 38rem;        /* 右から位置 */
+        padding       : 25px 25px;   /* 余白       */
+        background    : #87CEEB;     /* 背景色     */
+        color         : #ffffff;     /* 文字色     */
+        opacity       : 0.5;         /* 透明度     */
+        border-radius : 50%;         /* 角丸       */
+        font-size     : 20pt;        /* 文字サイズ */
+        font-weight   : bold;        /* 太字       */
+        line-height   : 1.2em;       /* 行の高さ   */
+        letter-spacing: 2px;         /* 文字間隔   */
+        text-align    : center;      /* 文字位置   */
+        cursor        : pointer;     /* カーソル   */
+        z-index       : 999;         /* 重ね順位   */
+        }
+    .back_link:hover {
+        opacity       : 0.9;   /* カーソル時透明度 */
+    }
+</style>
+
+<div class="example-wrapper">
+    <h1>自動生成<br>おすすめパーティ</h1>
+    <a href="/pokemon/recommend" class="recommend_link">もう1回</a>
+    <a href="/pokemon" class="back_link">戻る</a>
+    <div class="poke_party">
+        {% set img_num = poke1 %}
+        {% if poke1 matches '/_/' %}
+            {% set img_num = poke1[0:-2] %}
+            {# 三鳥 #}
+            {% if img_num in ["144", "145", "146"] %}
+                {% set img_num = img_num~"-galar" %}
+            {% endif %}
+            {# ヒヒダルマ #}
+            {% if img_num in "555" %}
+                {% set img_num = img_num~"-galar" %}
+            {% endif %}
+            {# 霊獣 #}
+            {% if img_num in ["641", "642", "645"] %}
+                {% set img_num = img_num~"-therian" %}
+            {% endif %}
+            {# ウーラオス #}
+            {% if img_num in "892" %}
+                {% set img_num = img_num~"_1" %}
+            {% endif %}
+        {% endif %}
+        <img src="../sprites/sprites/pokemon/{{img_num}}.png" style="height-max: 100px;width: 100px"/>
+        {% for pokemon in pokemons %}
+            {% set img_num = pokemon['id'] %}
+            {# フォーム違い対応 #}
+            {% if pokemon['form'] > 0 %}
+                {# 三鳥 #}
+                {% if img_num in ["144", "145", "146"] %}
+                    {% set img_num = img_num~"-galar" %}
+                {% endif %}
+                {# ヒヒダルマ #}
+                {% if img_num in "555" %}
+                    {% set img_num = img_num~"-galar" %}
+                {% endif %}
+                {# 霊獣 #}
+                {% if img_num in ["641", "642", "645"] %}
+                    {% set img_num = img_num~"-therian" %}
+                {% endif %}
+                {# ウーラオス #}
+                {% if img_num in "892" %}
+                    {% set img_num = img_num~"_1" %}
+                {% endif %}
+            {% endif %}
+            <img src="../sprites/sprites/pokemon/{{img_num}}.png" style="height-max: 100px;width: 100px"/>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
